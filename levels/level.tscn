@@ -1,28 +1,45 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=9 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
 [ext_resource type="PackedScene" uid="uid://ce7b8hymyeq4a" path="res://entityes/player/player.tscn" id="2_hjsbj"]
+[ext_resource type="PackedScene" uid="uid://c48ol5lf7kq8f" path="res://assets/models/beetle.glb" id="3_cwqvt"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hjsbj"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="Gradient" id="Gradient_hjsbj"]
+interpolation_mode = 2
+colors = PackedColorArray(0.105882354, 0.29803923, 0.14509805, 1, 0.6313726, 0.5568628, 0.6313726, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cwqvt"]
+gradient = SubResource("Gradient_hjsbj")
+width = 32
+height = 32
+fill_from = Vector2(1, 0.8888889)
+fill_to = Vector2(1, 0.11965812)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5mrsh"]
+panorama = SubResource("GradientTexture2D_cwqvt")
+filter = false
 
 [sub_resource type="Sky" id="Sky_cwqvt"]
-sky_material = SubResource("ProceduralSkyMaterial_hjsbj")
+sky_material = SubResource("PanoramaSkyMaterial_5mrsh")
+radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_5mrsh"]
 background_mode = 2
 sky = SubResource("Sky_cwqvt")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 
 [node name="level" instance=ExtResource("1_80vhd")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="0"]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="1"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
 environment = SubResource("Environment_5mrsh")
 
-[node name="Player" parent="." index="3" instance=ExtResource("2_hjsbj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34256017, 0, -0.05979657)
+[node name="Player" parent="." index="2" instance=ExtResource("2_hjsbj")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.34256017, 2, -0.05979657)
+
+[node name="player" parent="." index="3"]
+visible = false
+
+[node name="beetle" parent="." index="4" instance=ExtResource("3_cwqvt")]
+transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, -0.32000083, 1.9196258, 5.678649)
