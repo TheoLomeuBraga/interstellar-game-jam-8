@@ -1,25 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://ce7b8hymyeq4a"]
+[gd_scene load_steps=20 format=3 uid="uid://ce7b8hymyeq4a"]
 
 [ext_resource type="ArrayMesh" uid="uid://c0xfctw1qv4kr" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
 [ext_resource type="Script" uid="uid://cjy0fv2ew8mef" path="res://entityes/player/player.gd" id="1_wcdgv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wcdgv"]
-
-[sub_resource type="Animation" id="Animation_wcdgv"]
-resource_name = "walk"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ArtifactsCannon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.26666668, 0.7, 1),
-"transitions": PackedFloat32Array(1, -2, -2, 1),
-"update": 0,
-"values": [Vector3(0.3470434, -0.35372013, -3.5762787e-07), Vector3(0.30242085, -0.35372013, -3.5762787e-07), Vector3(0.37660086, -0.354, 0), Vector3(0.3470434, -0.35372013, -3.5762787e-07)]
-}
 
 [sub_resource type="Animation" id="Animation_fuk37"]
 length = 0.001
@@ -36,9 +20,10 @@ tracks/0/keys = {
 "values": [Vector3(0.3470434, -0.35372013, -3.5762787e-07)]
 }
 
-[sub_resource type="Animation" id="Animation_xlqk5"]
-resource_name = "jump"
-length = 0.2
+[sub_resource type="Animation" id="Animation_4xrlg"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -46,7 +31,23 @@ tracks/0/path = NodePath("ArtifactsCannon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999),
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(0.3470434, -0.35372013, -3.5762787e-07), Vector3(0.3470434, -0.40827334, -3.5762787e-07), Vector3(0.3470434, -0.35372013, -3.5762787e-07)]
+}
+
+[sub_resource type="Animation" id="Animation_xlqk5"]
+resource_name = "jump"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArtifactsCannon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
 "transitions": PackedFloat32Array(1.4640857, 4.1410623),
 "update": 0,
 "values": [Vector3(0.3470434, -0.35372013, -3.5762787e-07), Vector3(0.3470434, -0.5023883, -3.5762787e-07)]
@@ -68,28 +69,79 @@ tracks/0/keys = {
 "values": [Vector3(0.3470434, -0.35372013, -3.5762787e-07), Vector3(0.3470434, -0.35372013, 0.13458872), Vector3(0.3470434, -0.35372013, -3.5762787e-07)]
 }
 
+[sub_resource type="Animation" id="Animation_wcdgv"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArtifactsCannon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.7, 1),
+"transitions": PackedFloat32Array(1, -2, -2, 1),
+"update": 0,
+"values": [Vector3(0.3470434, -0.35372013, -3.5762787e-07), Vector3(0.30242085, -0.35372013, -3.5762787e-07), Vector3(0.37660086, -0.354, 0), Vector3(0.3470434, -0.35372013, -3.5762787e-07)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nsiue"]
 _data = {
 &"RESET": SubResource("Animation_fuk37"),
+&"idle": SubResource("Animation_4xrlg"),
 &"jump": SubResource("Animation_xlqk5"),
 &"shot": SubResource("Animation_nsiue"),
 &"walk": SubResource("Animation_wcdgv")
 }
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fuk37"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_brcdj"]
 
-[sub_resource type="Sky" id="Sky_xlqk5"]
-sky_material = SubResource("ProceduralSkyMaterial_fuk37")
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_fuk37"]
 
-[sub_resource type="Environment" id="Environment_nsiue"]
-background_mode = 2
-sky = SubResource("Sky_xlqk5")
-tonemap_mode = 2
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_228xv"]
+animation = &"idle"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xrlg"]
-albedo_color = Color(0.30980393, 0.43137255, 1, 1)
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ij31c"]
+fadein_time = 0.05
+fadeout_time = 0.1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h8x88"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_sppft"]
+fadein_time = 0.05
+fadeout_time = 0.05
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ynj1s"]
+animation = &"shot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tm6f5"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wcdgv"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_wcdgv"]
+graph_offset = Vector2(-1204.3848, 82.47101)
+nodes/output/position = Vector2(560, 220)
+nodes/idle/node = SubResource("AnimationNodeAnimation_228xv")
+nodes/idle/position = Vector2(-880, 120)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_brcdj")
+nodes/Add2/position = Vector2(-340, 180)
+nodes/walk/node = SubResource("AnimationNodeAnimation_tm6f5")
+nodes/walk/position = Vector2(-880, 420)
+nodes/shot/node = SubResource("AnimationNodeOneShot_sppft")
+nodes/shot/position = Vector2(-80, 300)
+nodes/jump/node = SubResource("AnimationNodeOneShot_ij31c")
+nodes/jump/position = Vector2(280, 280)
+nodes/shot_animation/node = SubResource("AnimationNodeAnimation_ynj1s")
+nodes/shot_animation/position = Vector2(-284.448, 542.74457)
+nodes/jump_animation/node = SubResource("AnimationNodeAnimation_h8x88")
+nodes/jump_animation/position = Vector2(-20, 600)
+nodes/walk_speed/node = SubResource("AnimationNodeTimeScale_wcdgv")
+nodes/walk_speed/position = Vector2(-660, 380)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_fuk37")
+nodes/TimeScale/position = Vector2(-512.2958, 132.45998)
+node_connections = [&"output", 0, &"jump", &"Add2", 0, &"TimeScale", &"Add2", 1, &"walk_speed", &"shot", 0, &"Add2", &"shot", 1, &"shot_animation", &"jump", 0, &"shot", &"jump", 1, &"jump_animation", &"walk_speed", 0, &"walk", &"TimeScale", 0, &"idle"]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_wcdgv")
@@ -136,25 +188,14 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="SubViewportContainer/SubViewport/cannon_camera"]
+tree_root = SubResource("AnimationNodeBlendTree_wcdgv")
 anim_player = NodePath("../AnimationPlayer")
-
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-top_level = true
-use_collision = true
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CSGCombiner3D"]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="CSGCombiner3D"]
-environment = SubResource("Environment_nsiue")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
-size = Vector3(100, 1, 100)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, 2, -2.3992558, -5.0300827)
-radius = 1.2407227
-height = 14.0
-material = SubResource("StandardMaterial3D_4xrlg")
+parameters/Add2/add_amount = 1.0
+parameters/shot/active = false
+parameters/shot/internal_active = false
+parameters/shot/request = 0
+parameters/jump/active = false
+parameters/jump/internal_active = false
+parameters/jump/request = 0
+parameters/walk_speed/scale = 1.0
+parameters/TimeScale/scale = 0.25

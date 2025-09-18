@@ -4,8 +4,13 @@ enum PlayerMotionEstates {NONE,FLOOR,AIR}
 var estate : PlayerMotionEstates = PlayerMotionEstates.AIR
 
 @onready var camera : Camera3D = $Camera3D
+@onready var animation_tree : AnimationTree = $SubViewportContainer/SubViewport/cannon_camera/AnimationTree
 
 func _input(event: InputEvent) -> void:
+	
+	if MainScene.current_mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
+	
 	if event is InputEventMouseMotion:
 		var e : InputEventMouseMotion = event
 		
@@ -14,7 +19,7 @@ func _input(event: InputEvent) -> void:
 			camera.rotation.x -= MainScene.get_settings_data("mouse sensitivity") * (e.screen_relative.y / 100.0)
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	pass
 
 @export var speed : float = 6.0
 @export var jump_power : float = 6.0
@@ -52,3 +57,14 @@ func _physics_process(delta: float) -> void:
 	camera.fov = MainScene.get_settings_data("fov")
 	
 	move_and_slide()
+
+func _process(delta: float) -> void:
+	
+	if not get_tree().paused:
+		MainScene.current_mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+	
+	animation_tree.set("parameters/walk_speed/scale",velocity.length() / 5.0)
+	
+	if estate == PlayerMotionEstates.FLOOR and Input.is_action_just_pressed("jump"):
+		animation_tree.set("parameters/jump/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

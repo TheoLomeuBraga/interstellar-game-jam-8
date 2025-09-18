@@ -1,7 +1,7 @@
 extends Node
 class_name MainScene
 
-static var main_scene_pack : PackedScene = preload("res://main_scene.tscn")
+static var main_scene_pack : PackedScene = load("res://main_scene.tscn")
 static var current_main_scene : MainScene
 
 @export var open_main_menu_on_ready : bool = true
@@ -12,6 +12,8 @@ static func secure_current_main_scene_existence() -> void:
 		current_main_scene.open_main_menu_on_ready = false
 		var tree : SceneTree = Engine.get_main_loop()
 		tree.get_root().add_child(current_main_scene)
+		
+		await tree.create_timer(0.05).timeout
 
 
 static var settings_data : Dictionary = {
@@ -61,6 +63,8 @@ func _ready() -> void:
 	
 	if open_main_menu_on_ready:
 		open_main_menu()
+	
+	secure_current_main_scene_existence()
 
 @export var settings_scene : PackedScene
 var settings_instance : Node
@@ -85,7 +89,7 @@ static func apply_settings() -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	
-	AudioServer.set_bus_volume_db(0,linear_to_db(get_settings_data("volume") / 100))
+	AudioServer.set_bus_volume_db(0,linear_to_db(get_settings_data("volume") / 100.0))
 
 static func close_settings() -> void:
 	
@@ -96,9 +100,17 @@ static func close_settings() -> void:
 		current_main_scene.settings_instance = null
 	
 
+@export var new_game_scene : PackedScene
+var new_game_instance : Node
 
 static func new_game() -> void:
-	pass
+	secure_current_main_scene_existence()
+	
+	if current_main_scene.new_game_instance == null:
+		current_main_scene.new_game_instance = current_main_scene.new_game_scene.instantiate()
+		current_main_scene.get_node("cenary").add_child(current_main_scene.new_game_instance)
+	
+	close_main_menu()
 
 static func continue_game() -> void:
 	pass
@@ -107,17 +119,23 @@ static func continue_game() -> void:
 @export var pause_scene : PackedScene
 var pause_instance : Node
 
-static var pre_pause_mouse_mode : Input.MouseMode
+
+static var current_mouse_mode : Input.MouseMode = Input.MOUSE_MODE_VISIBLE
+
+func _input(event: InputEvent) -> void:
+	if current_mouse_mode != Input.mouse_mode:
+		Input.mouse_mode = current_mouse_mode
 
 static func pause() -> void:
 	
-	pre_pause_mouse_mode = Input.mouse_mode
-	
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
 	secure_current_main_scene_existence()
+	#pre_pause_mouse_mode = current_mouse_mode
+	current_mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	
 	
 	current_main_scene.get_tree().paused = true
+	Engine.time_scale = 0.0
 	
 	if current_main_scene.pause_instance == null:
 		current_main_scene.pause_instance = current_main_scene.pause_scene.instantiate()
@@ -125,11 +143,10 @@ static func pause() -> void:
 
 static func unpause() -> void:
 	
-	Input.mouse_mode = pre_pause_mouse_mode
-	
 	secure_current_main_scene_existence()
 	
 	current_main_scene.get_tree().paused = false
+	Engine.time_scale = 1.0
 	
 	if current_main_scene.pause_instance != null:
 		current_main_scene.pause_instance.queue_free()
