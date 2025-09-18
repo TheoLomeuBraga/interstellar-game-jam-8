@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=8 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
 [ext_resource type="PackedScene" uid="uid://ce7b8hymyeq4a" path="res://entityes/player/player.tscn" id="2_hjsbj"]
-[ext_resource type="PackedScene" uid="uid://c48ol5lf7kq8f" path="res://assets/models/beetle.glb" id="3_cwqvt"]
 
 [sub_resource type="Gradient" id="Gradient_hjsbj"]
 interpolation_mode = 2
@@ -40,6 +39,3 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.3
 
 [node name="player" parent="." index="3"]
 visible = false
-
-[node name="beetle" parent="." index="4" instance=ExtResource("3_cwqvt")]
-transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, -0.32000083, 1.9196258, 5.678649)
