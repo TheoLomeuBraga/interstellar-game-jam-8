@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://b26omrkgwxyqb"]
+
+[ext_resource type="Script" uid="uid://dogv6wmyii7lp" path="res://main_scene.gd" id="1_0f027"]
+[ext_resource type="PackedScene" uid="uid://ceac5m7dytdk3" path="res://menus/main_menu.tscn" id="2_2c62f"]
+[ext_resource type="PackedScene" uid="uid://cqrj6cb8672t2" path="res://menus/settings.tscn" id="3_gyfs4"]
+[ext_resource type="PackedScene" uid="uid://b58ga6h20d8wm" path="res://menus/pause.tscn" id="4_d5x1h"]
+
+[node name="MainScene" type="Node"]
+process_mode = 3
+script = ExtResource("1_0f027")
+main_menu_scene = ExtResource("2_2c62f")
+settings_scene = ExtResource("3_gyfs4")
+pause_scene = ExtResource("4_d5x1h")
+
+[node name="menus" type="Node" parent="."]
+
+[node name="main" type="Node" parent="menus"]
+
+[node name="pause" type="Node" parent="menus"]
+
+[node name="settings" type="Node" parent="menus"]
+
+[node name="cenary" type="Node" parent="."]

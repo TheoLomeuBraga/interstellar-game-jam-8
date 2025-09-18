@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://b58ga6h20d8wm"]
+
+[ext_resource type="Script" uid="uid://dtmt31vhgloio" path="res://menus/pause.gd" id="1_t3mel"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_fm3j2"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+color = Color(0.5019608, 0.5019608, 0.5019608, 0)
+
+[node name="Pause" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_t3mel")
+
+[node name="Control" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 32
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="resume" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "resume"
+
+[node name="settings" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "settings"
+
+[node name="quit_game" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "quit game"
+
+[node name="HSeparator" type="HSeparator" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxLine_fm3j2")

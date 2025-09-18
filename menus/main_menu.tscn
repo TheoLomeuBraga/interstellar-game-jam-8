@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://ceac5m7dytdk3"]
+
+[ext_resource type="FontFile" uid="uid://nk0ugggp8js0" path="res://fonts/Adrenaline Hit.ttf" id="1_8gy84"]
+[ext_resource type="Script" uid="uid://dtn12mpsxb3jx" path="res://menus/main_menu.gd" id="1_ij7vn"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ij7vn"]
+content_margin_left = 0.0
+content_margin_top = 4.0
+content_margin_right = 0.0
+content_margin_bottom = 4.0
+color = Color(0.5019608, 0.5019608, 0.5019608, 0)
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_yjgyn"]
+content_margin_left = 0.0
+content_margin_top = 4.0
+content_margin_right = 0.0
+content_margin_bottom = 4.0
+color = Color(0.5019608, 0.5019608, 0.5019608, 0)
+vertical = true
+
+[node name="MainMenu" type="Control"]
+process_mode = 3
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ij7vn")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_8gy84")
+theme_override_font_sizes/font_size = 32
+text = "Curiosity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+theme_override_styles/separator = SubResource("StyleBoxLine_ij7vn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="new_game" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "new game"
+
+[node name="continue" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "continue
+"
+
+[node name="settings" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "settings"
+
+[node name="exit" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "exit"
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+theme_override_styles/separator = SubResource("StyleBoxLine_yjgyn")
