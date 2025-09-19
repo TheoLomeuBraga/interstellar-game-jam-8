@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=12 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
+[ext_resource type="Script" uid="uid://doa0emgwgvpww" path="res://levels/current_world_environment.gd" id="2_cwqvt"]
 [ext_resource type="PackedScene" uid="uid://ce7b8hymyeq4a" path="res://entityes/player/player.tscn" id="2_hjsbj"]
+[ext_resource type="Script" uid="uid://fhcpwam6n5y0" path="res://levels/enviorment_changer.gd" id="4_5mrsh"]
 
 [sub_resource type="Gradient" id="Gradient_hjsbj"]
 interpolation_mode = 2
@@ -23,19 +25,47 @@ sky_material = SubResource("PanoramaSkyMaterial_5mrsh")
 radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_5mrsh"]
+resource_local_to_scene = true
 background_mode = 2
 sky = SubResource("Sky_cwqvt")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_safpt"]
+size = Vector3(20, 21.887207, 14.235)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5mrsh"]
+size = Vector3(20.643185, 14.24, 15.65)
+
 [node name="level" instance=ExtResource("1_80vhd")]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
-environment = SubResource("Environment_5mrsh")
-
-[node name="Player" parent="." index="2" instance=ExtResource("2_hjsbj")]
+[node name="Player" parent="." index="1" instance=ExtResource("2_hjsbj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.34256017, 2, -0.05979657)
 
-[node name="player" parent="." index="3"]
+[node name="player" parent="." index="2"]
 visible = false
+
+[node name="enviorments" type="Node" parent="." index="3"]
+
+[node name="CurrentWorldEnvironment" type="WorldEnvironment" parent="enviorments" index="0"]
+environment = SubResource("Environment_5mrsh")
+script = ExtResource("2_cwqvt")
+
+[node name="entrence" type="Area3D" parent="enviorments" index="1"]
+script = ExtResource("4_5mrsh")
+light_color_change_speed = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/entrence" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4436035, 0)
+shape = SubResource("BoxShape3D_safpt")
+
+[node name="EnviormentChanger" type="Area3D" parent="enviorments" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.703024, 20)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.504092, 0, 0)
+shape = SubResource("BoxShape3D_5mrsh")

@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 enum PlayerMotionEstates {NONE,FLOOR,AIR}
 var estate : PlayerMotionEstates = PlayerMotionEstates.AIR
@@ -17,6 +18,11 @@ func _input(event: InputEvent) -> void:
 		if MainScene.get_settings_data("mouse sensitivity"):
 			rotation.y -= MainScene.get_settings_data("mouse sensitivity") * (e.screen_relative.x / 100.0)
 			camera.rotation.x -= MainScene.get_settings_data("mouse sensitivity") * (e.screen_relative.y / 100.0)
+		
+		if camera.rotation_degrees.x > 90:
+			camera.rotation_degrees.x = 90
+		if camera.rotation_degrees.x < -90:
+			camera.rotation_degrees.x = -90
 
 func _ready() -> void:
 	pass
