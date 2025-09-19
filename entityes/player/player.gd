@@ -25,6 +25,7 @@ func _input(event: InputEvent) -> void:
 			camera.rotation_degrees.x = -90
 
 func _ready() -> void:
+	MainScene.secure_current_main_scene_existence(self)
 	MainScene.pause_unpause_on = true
 
 @export var speed : float = 6.0
