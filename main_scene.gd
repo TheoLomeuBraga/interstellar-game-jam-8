@@ -126,7 +126,11 @@ func _input(event: InputEvent) -> void:
 	if current_mouse_mode != Input.mouse_mode:
 		Input.mouse_mode = current_mouse_mode
 
+
+
 static func pause() -> void:
+	
+	
 	
 	secure_current_main_scene_existence()
 	#pre_pause_mouse_mode = current_mouse_mode
@@ -140,8 +144,12 @@ static func pause() -> void:
 	if current_main_scene.pause_instance == null:
 		current_main_scene.pause_instance = current_main_scene.pause_scene.instantiate()
 		current_main_scene.get_node("menus/main").add_child(current_main_scene.pause_instance)
+	
+	
 
 static func unpause() -> void:
+	
+	
 	
 	secure_current_main_scene_existence()
 	
@@ -153,3 +161,19 @@ static func unpause() -> void:
 		current_main_scene.pause_instance = null
 	
 	close_settings()
+	
+	
+
+
+static var pause_unpause_on : bool = false
+
+func _process(delta: float) -> void:
+	if pause_unpause_on:
+		
+		if Input.is_action_just_pressed("menu"):
+			if current_main_scene.get_tree().paused:
+				unpause()
+			else:
+				pause()
+	
+	

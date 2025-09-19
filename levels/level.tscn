@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=24 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
 [ext_resource type="Script" uid="uid://doa0emgwgvpww" path="res://levels/current_world_environment.gd" id="2_cwqvt"]
 [ext_resource type="PackedScene" uid="uid://ce7b8hymyeq4a" path="res://entityes/player/player.tscn" id="2_hjsbj"]
+[ext_resource type="ArrayOccluder3D" uid="uid://dh2mbidrbgnvt" path="res://levels/level.occ" id="2_safpt"]
 [ext_resource type="Script" uid="uid://fhcpwam6n5y0" path="res://levels/enviorment_changer.gd" id="4_5mrsh"]
 
 [sub_resource type="Gradient" id="Gradient_hjsbj"]
@@ -35,18 +36,71 @@ tonemap_mode = 2
 [sub_resource type="BoxShape3D" id="BoxShape3D_safpt"]
 size = Vector3(20, 21.887207, 14.235)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_gjl0y"]
+size = Vector3(38.730225, 21.3, 17.45)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vnv7o"]
+size = Vector3(33.245, 50, 97.895)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_5mrsh"]
-size = Vector3(20.643185, 14.24, 15.65)
+size = Vector3(42.65341, 32.839966, 31.817627)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5x7l"]
+size = Vector3(40.012253, 30.15448, 22.972626)
+
+[sub_resource type="Curve" id="Curve_gjl0y"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.074803144, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vnv7o"]
+curve = SubResource("Curve_gjl0y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d5x7l"]
+emission_shape_scale = Vector3(5.125, 1, 6.935)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+initial_velocity_max = 2.0
+gravity = Vector3(0, -0.2, 0)
+scale_curve = SubResource("CurveTexture_vnv7o")
+color = Color(0.9676667, 1, 0.029999971, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_ukwr8"]
+material = SubResource("StandardMaterial3D_rtcij")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="Curve" id="Curve_safpt"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.074803144, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gjl0y"]
+curve = SubResource("Curve_safpt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vnv7o"]
+emission_shape_scale = Vector3(21.395, 1, 6.935)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+initial_velocity_max = 2.0
+gravity = Vector3(0, -1, 0)
+scale_curve = SubResource("CurveTexture_gjl0y")
+color = Color(0.4502213, 0.0024912476, 0.93973327, 1)
 
 [node name="level" instance=ExtResource("1_80vhd")]
 
-[node name="Player" parent="." index="1" instance=ExtResource("2_hjsbj")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.34256017, 2, -0.05979657)
-
-[node name="player" parent="." index="2"]
+[node name="player" parent="." index="1"]
 visible = false
 
-[node name="enviorments" type="Node" parent="." index="3"]
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="2"]
+visible = false
+occluder = ExtResource("2_safpt")
+
+[node name="Player" parent="." index="3" instance=ExtResource("2_hjsbj")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.34256017, 2, -0.05979657)
+
+[node name="enviorments" type="Node" parent="." index="4"]
 
 [node name="CurrentWorldEnvironment" type="WorldEnvironment" parent="enviorments" index="0"]
 environment = SubResource("Environment_5mrsh")
@@ -60,12 +114,59 @@ light_color_change_speed = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4436035, 0)
 shape = SubResource("BoxShape3D_safpt")
 
-[node name="EnviormentChanger" type="Area3D" parent="enviorments" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.703024, 20)
+[node name="EnviormentChanger2" type="Area3D" parent="enviorments" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.306309, 6.8244276, 19.147417)
 script = ExtResource("4_5mrsh")
-light_color = Color(0.29954746, 0.29954746, 0.29954743, 1)
+light_color = Color(0.72, 0.6408, 0.72, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2056885, 0, 0)
+shape = SubResource("BoxShape3D_gjl0y")
+
+[node name="EnviormentChanger3" type="Area3D" parent="enviorments" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.54556, 11.167667, -2.443695)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.89968, 0.96, 0.8352, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger3" index="0"]
+shape = SubResource("BoxShape3D_vnv7o")
+
+[node name="EnviormentChanger" type="Area3D" parent="enviorments" index="4"]
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, -28.070759, 0, -60.744015)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.63375676, 0.6337568, 0.63375676, 1)
 metadata/_custom_type_script = "uid://fhcpwam6n5y0"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.504092, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7693996, 11.419983, -1.1729736)
 shape = SubResource("BoxShape3D_5mrsh")
+
+[node name="EnviormentChanger4" type="Area3D" parent="enviorments" index="5"]
+transform = Transform3D(-0.04173614, 0, 0.9991287, 0, 1, 0, -0.9991287, 0, -0.04173614, 9.486183, -17.805923, -85.68977)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.40069774, 0.40069774, 0.40069768, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger4" index="0"]
+transform = Transform3D(0.99998325, 0, -4.4330955e-07, 0, 1, 0, 4.4330955e-07, 0, 0.99998325, -5.644203, 12.759008, -2.6362133)
+shape = SubResource("BoxShape3D_d5x7l")
+
+[node name="particles" type="Node" parent="." index="5"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="particles" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7175136, 14.714041, 0)
+amount = 256
+lifetime = 20.0
+visibility_aabb = AABB(-11.72, -15.28, -10.48, 21.61, 21.035, 22.15)
+process_material = SubResource("ParticleProcessMaterial_d5x7l")
+draw_pass_1 = SubResource("QuadMesh_ukwr8")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="particles" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.56568, 13.921662, 19.764309)
+amount = 256
+lifetime = 5.0
+visibility_aabb = AABB(-21.405, -17.575, -6.805, 42.425, 19.355, 15.76)
+process_material = SubResource("ParticleProcessMaterial_vnv7o")
+draw_pass_1 = SubResource("QuadMesh_ukwr8")

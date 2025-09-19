@@ -25,7 +25,7 @@ func _input(event: InputEvent) -> void:
 			camera.rotation_degrees.x = -90
 
 func _ready() -> void:
-	pass
+	MainScene.pause_unpause_on = true
 
 @export var speed : float = 6.0
 @export var jump_power : float = 6.0
@@ -35,8 +35,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if Input.is_action_just_pressed("menu"):
-		MainScene.pause()
+	
+	
 	
 	if estate == PlayerMotionEstates.FLOOR:
 		var input_dir : Vector3 = ((Input.get_axis("walk_front","walk_back") * basis.z) + (Input.get_axis("walk_left","walk_right") * basis.x)).normalized() * speed
