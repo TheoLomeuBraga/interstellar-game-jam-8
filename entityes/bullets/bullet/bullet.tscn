@@ -25,6 +25,7 @@ color = Color(1, 1, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
 vertex_color_use_as_albedo = true
 billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_cbsxn"]
 material = SubResource("StandardMaterial3D_rtcij")

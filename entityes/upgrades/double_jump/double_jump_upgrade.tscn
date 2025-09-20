@@ -14,3 +14,8 @@ mesh = ExtResource("1_51pf6")
 [node name="ShapeCast3D" type="ShapeCast3D" parent="."]
 shape = SubResource("SphereShape3D_6tmta")
 target_position = Vector3(0, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0, 1, 1, 1)
+light_energy = 2.0
+omni_range = 10.0

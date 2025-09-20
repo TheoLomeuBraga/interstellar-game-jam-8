@@ -10,4 +10,5 @@ func _physics_process(delta: float) -> void:
 			var p : Player = $ShapeCast3D.get_collider(i)
 			p.has_double_jump_upgrade = true
 			$MeshInstance3D.visible = false
+			$OmniLight3D.light_energy = 0.0
 			

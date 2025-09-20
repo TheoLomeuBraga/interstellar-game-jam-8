@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://nvbaj50bxfpd"]
+
+[ext_resource type="Script" uid="uid://w4g4jjkeoaf1" path="res://entityes/stone/stone.gd" id="1_dmgph"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_is8jh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_is8jh"]
+
+[sub_resource type="Curve" id="Curve_dmgph"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.21969697, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.033707857), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ai815"]
+curve = SubResource("Curve_dmgph")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bkcbx"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 2
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_curve = SubResource("CurveTexture_ai815")
+color = Color(0.3157368, 0.20403275, 0.14312592, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_aeats"]
+material = SubResource("StandardMaterial3D_rtcij")
+size = Vector2(0.1, 0.1)
+
+[node name="Stone" type="StaticBody3D"]
+script = ExtResource("1_dmgph")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_is8jh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_is8jh")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_bkcbx")
+draw_pass_1 = SubResource("QuadMesh_aeats")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]

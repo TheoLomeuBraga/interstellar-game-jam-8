@@ -43,6 +43,8 @@ var double_jump_avaliable : bool = false
 @export var power_bullet : PackedScene
 var gun_cooldown : float = 0
 
+@export var relics : int = 0
+
 func gun_process(delta: float) -> void:
 	gun_cooldown -= delta
 	

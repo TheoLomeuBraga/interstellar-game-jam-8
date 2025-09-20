@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ce7b8hymyeq4a"]
+[gd_scene load_steps=23 format=3 uid="uid://ce7b8hymyeq4a"]
 
 [ext_resource type="ArrayMesh" uid="uid://bwy6d08ducca6" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
 [ext_resource type="Script" uid="uid://cjy0fv2ew8mef" path="res://entityes/player/player.gd" id="1_wcdgv"]
@@ -143,6 +143,13 @@ nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_fuk37")
 nodes/TimeScale/position = Vector2(-512.2958, 132.45998)
 node_connections = [&"output", 0, &"jump", &"Add2", 0, &"TimeScale", &"Add2", 1, &"walk_speed", &"shot", 0, &"Add2", &"shot", 1, &"shot_animation", &"jump", 0, &"shot", &"jump", 1, &"jump_animation", &"walk_speed", 0, &"walk", &"TimeScale", 0, &"idle"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fuk37"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_fuk37"]
+material = SubResource("StandardMaterial3D_fuk37")
+size = Vector3(0.1, 0.1, 0.1)
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_wcdgv")
 normal_bullet = ExtResource("2_fuk37")
@@ -203,3 +210,34 @@ parameters/jump/internal_active = false
 parameters/jump/request = 0
 parameters/walk_speed/scale = 1.0
 parameters/TimeScale/scale = 0.25
+
+[node name="cross" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cannon_camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+layers = 2
+mesh = SubResource("BoxMesh_fuk37")
+
+[node name="cross2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cannon_camera/cross"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0)
+layers = 2
+mesh = SubResource("BoxMesh_fuk37")
+skeleton = NodePath("../..")
+
+[node name="cross3" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cannon_camera/cross"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0)
+layers = 2
+mesh = SubResource("BoxMesh_fuk37")
+skeleton = NodePath("../..")
+
+[node name="cross4" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cannon_camera/cross"]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -8.742278e-09, -0.19999999, 0)
+layers = 2
+mesh = SubResource("BoxMesh_fuk37")
+skeleton = NodePath("../..")
+
+[node name="cross5" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cannon_camera/cross"]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 8.742278e-09, 0.19999999, 0)
+layers = 2
+mesh = SubResource("BoxMesh_fuk37")
+skeleton = NodePath("../..")
+
+[node name="SFX" type="Node" parent="."]
