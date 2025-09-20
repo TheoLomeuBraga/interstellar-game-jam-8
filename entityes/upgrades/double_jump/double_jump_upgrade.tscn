@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://xctufj4lyped"]
+
+[ext_resource type="ArrayMesh" uid="uid://4rr4cvefvrha" path="res://assets/models/artifacts_blue_orb.res" id="1_51pf6"]
+
+[node name="DoubleJumpUpgrade" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_51pf6")

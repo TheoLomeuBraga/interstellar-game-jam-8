@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=25 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
 [ext_resource type="Script" uid="uid://doa0emgwgvpww" path="res://levels/current_world_environment.gd" id="2_cwqvt"]
 [ext_resource type="PackedScene" uid="uid://ce7b8hymyeq4a" path="res://entityes/player/player.tscn" id="2_hjsbj"]
 [ext_resource type="ArrayOccluder3D" uid="uid://dh2mbidrbgnvt" path="res://levels/level.occ" id="2_safpt"]
 [ext_resource type="Script" uid="uid://fhcpwam6n5y0" path="res://levels/enviorment_changer.gd" id="4_5mrsh"]
+[ext_resource type="PackedScene" uid="uid://c14rr1rr0rvvw" path="res://entityes/light_plant/light_plant.tscn" id="6_gjl0y"]
 
 [sub_resource type="Gradient" id="Gradient_hjsbj"]
 interpolation_mode = 2
@@ -170,3 +171,6 @@ lifetime = 5.0
 visibility_aabb = AABB(-21.405, -17.575, -6.805, 42.425, 19.355, 15.76)
 process_material = SubResource("ParticleProcessMaterial_vnv7o")
 draw_pass_1 = SubResource("QuadMesh_ukwr8")
+
+[node name="LightPlant" parent="." index="6" instance=ExtResource("6_gjl0y")]
+transform = Transform3D(1, 0, 0, 0, -0.983137, -0.18287037, 0, 0.18287037, -0.983137, -7.263278, 6.7942553, 18.24326)
