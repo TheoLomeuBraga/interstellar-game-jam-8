@@ -43,3 +43,6 @@ mesh = SubResource("SphereMesh_c855f")
 amount = 4
 process_material = SubResource("ParticleProcessMaterial_g10eb")
 draw_pass_1 = SubResource("QuadMesh_cbsxn")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+autoplay = true

@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxwin4c058svv"]
+
+[ext_resource type="Script" uid="uid://dkq6sqyygi5xj" path="res://entityes/force_fild/force_fild.gd" id="1_61two"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_is8jh"]
+size = Vector3(10, 5, 1)
+
+[sub_resource type="Shader" id="Shader_4gnq1"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.5.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, unshaded;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+
+varying vec3 pixel_position;
+
+void vertex() {
+    pixel_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
+
+void fragment() {
+	
+	if(texture(texture_albedo,vec2(distance(pixel_position,MODEL_MATRIX[3].xyz) / 0.5 - TIME,0.0)).a < 0.5){
+		discard;
+	}
+	
+	ALBEDO = albedo.rgb;
+	
+	METALLIC = 0.0;
+	SPECULAR = 0.0;
+	ROUGHNESS = 0.0;
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_4gnq1"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5409836)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_llac4"]
+gradient = SubResource("Gradient_4gnq1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_llac4"]
+render_priority = 0
+shader = SubResource("Shader_4gnq1")
+shader_parameter/albedo = Color(1, 0, 0, 1)
+shader_parameter/texture_albedo = SubResource("GradientTexture1D_llac4")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4gnq1"]
+material = SubResource("ShaderMaterial_llac4")
+size = Vector3(10, 5, 1)
+
+[sub_resource type="Curve" id="Curve_dmgph"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.21969697, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.033707857), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ai815"]
+curve = SubResource("Curve_dmgph")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_llac4"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 3
+emission_box_extents = Vector3(10, 5, 1)
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_curve = SubResource("CurveTexture_ai815")
+color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_aeats"]
+material = SubResource("StandardMaterial3D_rtcij")
+size = Vector2(0.1, 0.1)
+
+[node name="force_fild" type="StaticBody3D"]
+script = ExtResource("1_61two")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_is8jh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_4gnq1")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_llac4")
+draw_pass_1 = SubResource("QuadMesh_aeats")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]

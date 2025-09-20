@@ -157,6 +157,7 @@ normal_bullet = ExtResource("2_fuk37")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 cull_mask = 1
+doppler_tracking = 2
 fov = 90.0
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Camera3D"]
