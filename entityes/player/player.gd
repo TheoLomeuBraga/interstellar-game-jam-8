@@ -38,7 +38,7 @@ func _ready() -> void:
 @export var has_double_jump_upgrade : bool = false
 var double_jump_avaliable : bool = false
 
-@export var has_double_gun_upgrade : bool = false
+@export var has_gun_upgrade : bool = false
 @export var normal_bullet : PackedScene
 @export var power_bullet : PackedScene
 var gun_cooldown : float = 0
@@ -47,12 +47,20 @@ func gun_process(delta: float) -> void:
 	gun_cooldown -= delta
 	
 	if gun_cooldown <= 0 and Input.is_action_just_pressed("shot"):
-		pass
+		var b : ShapeCast3D = normal_bullet.instantiate()
+		$Camera3D/Muzle.add_child(b)
+		b.top_level = true
+		b.add_exception(self)
+		b.global_position = $Camera3D/Muzle.global_position
+		b.global_rotation = $Camera3D/Muzle.global_rotation
+		
+		animation_tree.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		
+		gun_cooldown = 0.25
 
 func _physics_process(delta: float) -> void:
 	
-	
-	
+	gun_process(delta)
 	
 	if estate == PlayerMotionEstates.FLOOR:
 		var input_dir : Vector3 = ((Input.get_axis("walk_front","walk_back") * basis.z) + (Input.get_axis("walk_left","walk_right") * basis.x)).normalized() * speed

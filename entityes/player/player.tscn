@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://ce7b8hymyeq4a"]
+[gd_scene load_steps=21 format=3 uid="uid://ce7b8hymyeq4a"]
 
 [ext_resource type="ArrayMesh" uid="uid://bwy6d08ducca6" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
 [ext_resource type="Script" uid="uid://cjy0fv2ew8mef" path="res://entityes/player/player.gd" id="1_wcdgv"]
+[ext_resource type="PackedScene" uid="uid://devnyq4gjmgpe" path="res://entityes/bullets/bullet/bullet.tscn" id="2_fuk37"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wcdgv"]
 
@@ -121,7 +122,6 @@ animation = &"walk"
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wcdgv"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_wcdgv"]
-graph_offset = Vector2(-1204.3848, 82.47101)
 nodes/output/position = Vector2(560, 220)
 nodes/idle/node = SubResource("AnimationNodeAnimation_228xv")
 nodes/idle/position = Vector2(-880, 120)
@@ -145,7 +145,7 @@ node_connections = [&"output", 0, &"jump", &"Add2", 0, &"TimeScale", &"Add2", 1,
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_wcdgv")
-has_double_jump_upgrade = true
+normal_bullet = ExtResource("2_fuk37")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -155,7 +155,7 @@ fov = 90.0
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Camera3D"]
 remote_path = NodePath("../../SubViewportContainer/SubViewport/cannon_camera")
 
-[node name="Muzles" type="Node3D" parent="Camera3D"]
+[node name="Muzle" type="Node3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

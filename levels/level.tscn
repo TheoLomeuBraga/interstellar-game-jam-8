@@ -173,4 +173,4 @@ process_material = SubResource("ParticleProcessMaterial_vnv7o")
 draw_pass_1 = SubResource("QuadMesh_ukwr8")
 
 [node name="LightPlant" parent="." index="6" instance=ExtResource("6_gjl0y")]
-transform = Transform3D(1, 0, 0, 0, -0.983137, -0.18287037, 0, 0.18287037, -0.983137, -7.263278, 6.7942553, 18.24326)
+transform = Transform3D(1, 0, 0, 0, -0.983137, -0.18287037, 0, 0.18287037, -0.983137, 0.5885105, 9.492468, 12.765878)

@@ -54,7 +54,7 @@ static func close_main_menu() -> void:
 
 func _ready() -> void:
 	
-	print("ready")
+	
 	
 	current_main_scene = self
 	
