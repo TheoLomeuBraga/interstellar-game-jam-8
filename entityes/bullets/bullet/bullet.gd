@@ -9,3 +9,6 @@ func _physics_process(delta: float) -> void:
 		if get_collider(i) is Stone:
 			var s : Stone = get_collider(i)
 			s.explode()
+	
+	if get_collision_count() > 0:
+		queue_free()

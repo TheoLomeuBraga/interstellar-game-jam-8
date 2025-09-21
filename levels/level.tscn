@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=27 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
 [ext_resource type="Script" uid="uid://doa0emgwgvpww" path="res://levels/current_world_environment.gd" id="2_cwqvt"]
@@ -90,6 +90,9 @@ gravity = Vector3(0, -1, 0)
 scale_curve = SubResource("CurveTexture_gjl0y")
 color = Color(0.4502213, 0.0024912476, 0.93973327, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rtcij"]
+size = Vector3(3, 30.12086, 105.54379)
+
 [node name="level" instance=ExtResource("1_80vhd")]
 
 [node name="player" parent="." index="1"]
@@ -180,3 +183,10 @@ transform = Transform3D(1, 0, 0, 0, -0.983137, -0.18287037, 0, 0.18287037, -0.98
 
 [node name="DoubleJumpUpgrade" parent="artifacts" index="0" instance=ExtResource("7_vnv7o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.794391, -14.396831, -89.17654)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.71312, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 12.94543, 2.048111)
+shape = SubResource("BoxShape3D_rtcij")

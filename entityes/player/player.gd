@@ -49,16 +49,32 @@ func gun_process(delta: float) -> void:
 	gun_cooldown -= delta
 	
 	if gun_cooldown <= 0 and Input.is_action_just_pressed("shot"):
-		var b : ShapeCast3D = normal_bullet.instantiate()
-		$Camera3D/Muzle.add_child(b)
-		b.top_level = true
-		b.add_exception(self)
-		b.global_position = $Camera3D/Muzle.global_position
-		b.global_rotation = $Camera3D/Muzle.global_rotation
 		
-		animation_tree.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		if not has_gun_upgrade:
+			
+			var b : ShapeCast3D = normal_bullet.instantiate()
+			$Camera3D/Muzle.add_child(b)
+			b.top_level = true
+			b.add_exception(self)
+			b.global_position = $Camera3D/Muzle.global_position
+			b.global_rotation = $Camera3D/Muzle.global_rotation
+			
+			animation_tree.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			
+			gun_cooldown = 0.25
 		
-		gun_cooldown = 0.25
+		else:
+			
+			var b : RayCast3D = power_bullet.instantiate()
+			$Camera3D/Muzle.add_child(b)
+			b.top_level = true
+			b.add_exception(self)
+			b.global_position = $Camera3D/Muzle.global_position
+			b.global_rotation = $Camera3D/Muzle.global_rotation
+			
+			animation_tree.set("parameters/shot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			
+			gun_cooldown = 0.1
 
 func _physics_process(delta: float) -> void:
 	

@@ -1,6 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://d12x6sdn6fjka"]
+[gd_scene load_steps=5 format=3 uid="uid://d12x6sdn6fjka"]
+
+[ext_resource type="Script" uid="uid://b3yxytqyaql1m" path="res://entityes/bullets/ray/death_ray.gd" id="1_ywt07"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wq5pf"]
+emission_shape_scale = Vector3(0.01, 0.01, 5)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0.2, 0)
+color = Color(0.9607843, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
 vertex_color_use_as_albedo = true
@@ -13,10 +20,13 @@ size = Vector2(0.1, 0.1)
 
 [node name="DeathRay" type="RayCast3D"]
 target_position = Vector3(0, 0, -100)
+script = ExtResource("1_ywt07")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 autoplay = true
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_wq5pf")
 draw_pass_1 = SubResource("QuadMesh_wq5pf")

@@ -5,15 +5,14 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6tmta"]
 
-[node name="DoubleJumpUpgrade" type="Node3D"]
+[node name="DoubleJumpUpgrade" type="ShapeCast3D"]
+shape = SubResource("SphereShape3D_6tmta")
+target_position = Vector3(0, 0, 0)
 script = ExtResource("1_0dkpn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_51pf6")
-
-[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
-shape = SubResource("SphereShape3D_6tmta")
-target_position = Vector3(0, 0, 0)
+skeleton = NodePath("")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(0, 1, 1, 1)

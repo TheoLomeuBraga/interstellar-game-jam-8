@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://ce7b8hymyeq4a"]
+[gd_scene load_steps=24 format=3 uid="uid://ce7b8hymyeq4a"]
 
 [ext_resource type="ArrayMesh" uid="uid://bwy6d08ducca6" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
 [ext_resource type="Script" uid="uid://cjy0fv2ew8mef" path="res://entityes/player/player.gd" id="1_wcdgv"]
 [ext_resource type="PackedScene" uid="uid://devnyq4gjmgpe" path="res://entityes/bullets/bullet/bullet.tscn" id="2_fuk37"]
+[ext_resource type="PackedScene" uid="uid://d12x6sdn6fjka" path="res://entityes/bullets/ray/death_ray.tscn" id="3_xlqk5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wcdgv"]
 
@@ -153,6 +154,7 @@ size = Vector3(0.1, 0.1, 0.1)
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_wcdgv")
 normal_bullet = ExtResource("2_fuk37")
+power_bullet = ExtResource("3_xlqk5")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
