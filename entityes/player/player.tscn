@@ -1,9 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://ce7b8hymyeq4a"]
+[gd_scene load_steps=27 format=3 uid="uid://ce7b8hymyeq4a"]
 
 [ext_resource type="ArrayMesh" uid="uid://bwy6d08ducca6" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
 [ext_resource type="Script" uid="uid://cjy0fv2ew8mef" path="res://entityes/player/player.gd" id="1_wcdgv"]
 [ext_resource type="PackedScene" uid="uid://devnyq4gjmgpe" path="res://entityes/bullets/bullet/bullet.tscn" id="2_fuk37"]
 [ext_resource type="PackedScene" uid="uid://d12x6sdn6fjka" path="res://entityes/bullets/ray/death_ray.tscn" id="3_xlqk5"]
+[ext_resource type="AudioStream" uid="uid://kh18ldidxrtb" path="res://sfx/fall.wav" id="5_4xrlg"]
+[ext_resource type="AudioStream" uid="uid://b7sxglfckrccf" path="res://sfx/djump.wav" id="5_brcdj"]
+[ext_resource type="AudioStream" uid="uid://cgjpddwksqiee" path="res://sfx/shot.wav" id="6_brcdj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wcdgv"]
 
@@ -244,3 +247,14 @@ mesh = SubResource("BoxMesh_fuk37")
 skeleton = NodePath("../..")
 
 [node name="SFX" type="Node" parent="."]
+
+[node name="jump" type="AudioStreamPlayer" parent="SFX"]
+
+[node name="djump" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("5_brcdj")
+
+[node name="fall" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("5_4xrlg")
+
+[node name="shot" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("6_brcdj")

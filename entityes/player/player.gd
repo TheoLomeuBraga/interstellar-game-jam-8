@@ -50,6 +50,8 @@ func gun_process(delta: float) -> void:
 	
 	if gun_cooldown <= 0 and Input.is_action_just_pressed("shot"):
 		
+		$SFX/shot.play()
+		
 		if not has_gun_upgrade:
 			
 			var b : ShapeCast3D = normal_bullet.instantiate()
@@ -89,6 +91,7 @@ func _physics_process(delta: float) -> void:
 			double_jump_avaliable = true
 		
 		if Input.is_action_just_pressed("jump"):
+			$SFX/jump.play()
 			velocity.y = jump_power
 		
 		if not is_on_floor():
@@ -102,9 +105,11 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z,input_dir.z,friction_air * delta)
 		
 		if double_jump_avaliable and Input.is_action_just_pressed("jump"):
+			$SFX/djump.play()
 			velocity.y = jump_power * 2
 		
 		if is_on_floor():
+			$SFX/fall.play()
 			estate = PlayerMotionEstates.FLOOR
 		
 	

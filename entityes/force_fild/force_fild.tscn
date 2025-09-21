@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dxwin4c058svv"]
+[gd_scene load_steps=14 format=3 uid="uid://dxwin4c058svv"]
 
 [ext_resource type="Script" uid="uid://dkq6sqyygi5xj" path="res://entityes/force_fild/force_fild.gd" id="1_61two"]
+[ext_resource type="AudioStream" uid="uid://dvvwo3ij41gd7" path="res://sfx/fild_decipation.wav" id="2_llac4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_is8jh"]
 size = Vector3(10, 5, 1)
@@ -97,3 +98,4 @@ process_material = SubResource("ParticleProcessMaterial_llac4")
 draw_pass_1 = SubResource("QuadMesh_aeats")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_llac4")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://nvbaj50bxfpd"]
+[gd_scene load_steps=10 format=3 uid="uid://nvbaj50bxfpd"]
 
 [ext_resource type="Script" uid="uid://w4g4jjkeoaf1" path="res://entityes/stone/stone.gd" id="1_dmgph"]
+[ext_resource type="AudioStream" uid="uid://cdcw1ihryh6lv" path="res://sfx/rock_destruction.wav" id="2_ai815"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_is8jh"]
 
@@ -50,3 +51,4 @@ process_material = SubResource("ParticleProcessMaterial_bkcbx")
 draw_pass_1 = SubResource("QuadMesh_aeats")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_ai815")
