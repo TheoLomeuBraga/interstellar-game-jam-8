@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1qq8pwkqplg4"]
+
+[ext_resource type="Script" uid="uid://bcxx8fp0o1bnk" path="res://entityes/upgrades/artifact/artifact.gd" id="1_nwllx"]
+[ext_resource type="ArrayMesh" uid="uid://me5q0vl18sa7" path="res://assets/models/artifacts_green_orb.res" id="1_r3mu3"]
+[ext_resource type="AudioStream" uid="uid://hlxqxaig0eo4" path="res://sfx/upgrade_or_artifact.wav" id="2_nwllx"]
+[ext_resource type="AudioStream" uid="uid://blisbdv3hitd0" path="res://sfx/artifact_noise.wav" id="3_g5mem"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_56wk7"]
+
+[node name="Artifact" type="ShapeCast3D"]
+shape = SubResource("SphereShape3D_56wk7")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("1_nwllx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_r3mu3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0, 1, 0, 1)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_nwllx")
+
+[node name="noise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_g5mem")
+unit_size = 30.0
+autoplay = true
+max_distance = 50.0

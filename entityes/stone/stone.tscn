@@ -1,11 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://nvbaj50bxfpd"]
+[gd_scene load_steps=11 format=3 uid="uid://nvbaj50bxfpd"]
 
 [ext_resource type="Script" uid="uid://w4g4jjkeoaf1" path="res://entityes/stone/stone.gd" id="1_dmgph"]
 [ext_resource type="AudioStream" uid="uid://cdcw1ihryh6lv" path="res://sfx/rock_destruction.wav" id="2_ai815"]
+[ext_resource type="Texture2D" uid="uid://dc46mldgivtke" path="res://assets/textures/stone_floor.webp" id="2_bkcbx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_is8jh"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_is8jh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aeats"]
+albedo_color = Color(0.5802412, 0.32717204, 0.30500123, 1)
+albedo_texture = ExtResource("2_bkcbx")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+texture_filter = 0
 
 [sub_resource type="Curve" id="Curve_dmgph"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.21969697, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.033707857), 0.0, 0.0, 0, 0]
@@ -40,7 +46,25 @@ script = ExtResource("1_dmgph")
 shape = SubResource("BoxShape3D_is8jh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_is8jh")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="MeshInstance3D"]
+material = SubResource("StandardMaterial3D_aeats")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3281747, -0.18294865, 0.2868985)
+material = SubResource("StandardMaterial3D_aeats")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17280966, 0.26575938, -0.37046373)
+material = SubResource("StandardMaterial3D_aeats")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23081791, 0.12715766, 0.18754625)
+material = SubResource("StandardMaterial3D_aeats")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24701035, -0.074107915, -0.27619463)
+material = SubResource("StandardMaterial3D_aeats")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 emitting = false

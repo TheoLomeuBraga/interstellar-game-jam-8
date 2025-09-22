@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ccj5342r5mk4o"]
+[gd_scene load_steps=53 format=3 uid="uid://ccj5342r5mk4o"]
 
 [ext_resource type="PackedScene" uid="uid://bk434lce254do" path="res://levels/level.glb" id="1_80vhd"]
 [ext_resource type="Script" uid="uid://doa0emgwgvpww" path="res://levels/current_world_environment.gd" id="2_cwqvt"]
@@ -7,6 +7,12 @@
 [ext_resource type="Script" uid="uid://fhcpwam6n5y0" path="res://levels/enviorment_changer.gd" id="4_5mrsh"]
 [ext_resource type="PackedScene" uid="uid://c14rr1rr0rvvw" path="res://entityes/light_plant/light_plant.tscn" id="6_gjl0y"]
 [ext_resource type="PackedScene" uid="uid://xctufj4lyped" path="res://entityes/upgrades/double_jump/double_jump_upgrade.tscn" id="7_vnv7o"]
+[ext_resource type="PackedScene" uid="uid://d1qq8pwkqplg4" path="res://entityes/upgrades/artifact/artifact.tscn" id="8_d5x7l"]
+[ext_resource type="PackedScene" uid="uid://dvhdrhij41l6s" path="res://entityes/upgrades/ray_upgrade/ray_upgrade.tscn" id="8_rtcij"]
+[ext_resource type="PackedScene" uid="uid://nvbaj50bxfpd" path="res://entityes/stone/stone.tscn" id="10_hy0rb"]
+[ext_resource type="Script" uid="uid://dkq6sqyygi5xj" path="res://entityes/force_fild/force_fild.gd" id="11_mxp4k"]
+[ext_resource type="AudioStream" uid="uid://dvvwo3ij41gd7" path="res://sfx/fild_decipation.wav" id="12_d7v53"]
+[ext_resource type="Script" uid="uid://bafb1oi8xpul" path="res://levels/goal.gd" id="13_mxp4k"]
 
 [sub_resource type="Gradient" id="Gradient_hjsbj"]
 interpolation_mode = 2
@@ -50,6 +56,15 @@ size = Vector3(42.65341, 32.839966, 31.817627)
 [sub_resource type="BoxShape3D" id="BoxShape3D_d5x7l"]
 size = Vector3(40.012253, 30.15448, 22.972626)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxp4k"]
+size = Vector3(95.70295, 30.15448, 40.81151)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d7v53"]
+size = Vector3(134.25264, 36.940033, 40.81151)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ta7ci"]
+size = Vector3(46.33263, 36.940033, 44.386345)
+
 [sub_resource type="Curve" id="Curve_gjl0y"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.074803144, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -92,6 +107,139 @@ color = Color(0.4502213, 0.0024912476, 0.93973327, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rtcij"]
 size = Vector3(3, 30.12086, 105.54379)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0qmeg"]
+size = Vector3(10, 9.5, 1)
+
+[sub_resource type="Shader" id="Shader_4gnq1"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.5.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, unshaded;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+
+varying vec3 pixel_position;
+
+void vertex() {
+    pixel_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
+
+void fragment() {
+	
+	if(texture(texture_albedo,vec2(distance(pixel_position,MODEL_MATRIX[3].xyz) / 0.5 - TIME,0.0)).a < 0.5){
+		discard;
+	}
+	
+	ALBEDO = albedo.rgb;
+	EMISSION = albedo.rgb;
+	
+	METALLIC = 0.0;
+	SPECULAR = 0.0;
+	ROUGHNESS = 0.0;
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_4gnq1"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5409836)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_llac4"]
+gradient = SubResource("Gradient_4gnq1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_llac4"]
+render_priority = 0
+shader = SubResource("Shader_4gnq1")
+shader_parameter/albedo = Color(1, 0, 0, 1)
+shader_parameter/texture_albedo = SubResource("GradientTexture1D_llac4")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ta7ci"]
+material = SubResource("ShaderMaterial_llac4")
+size = Vector3(14.18, 9.445, 1)
+
+[sub_resource type="Curve" id="Curve_dmgph"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.21969697, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.033707857), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ai815"]
+curve = SubResource("Curve_dmgph")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_llac4"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 3
+emission_box_extents = Vector3(10, 5, 1)
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_curve = SubResource("CurveTexture_ai815")
+color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lh335"]
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_aeats"]
+material = SubResource("StandardMaterial3D_lh335")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u6cys"]
+size = Vector3(35.685, 24.56, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_368ro"]
+material = SubResource("ShaderMaterial_llac4")
+size = Vector3(38.24, 25.21, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hy0rb"]
+radius = 2.0
+
+[sub_resource type="Shader" id="Shader_hy0rb"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.5.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, unshaded;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+
+varying vec3 pixel_position;
+
+void vertex() {
+    pixel_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
+
+void fragment() {
+	
+	if(texture(texture_albedo,vec2(distance(pixel_position,MODEL_MATRIX[3].xyz) / 0.5 - TIME,0.0)).a < 0.5){
+		discard;
+	}
+	
+	ALBEDO = albedo.rgb;
+	EMISSION = albedo.rgb;
+	
+	METALLIC = 0.0;
+	SPECULAR = 0.0;
+	ROUGHNESS = 0.0;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mxp4k"]
+render_priority = 0
+shader = SubResource("Shader_hy0rb")
+shader_parameter/albedo = Color(1, 1, 0, 1)
+shader_parameter/texture_albedo = SubResource("GradientTexture1D_llac4")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mxp4k"]
+material = SubResource("ShaderMaterial_mxp4k")
+top_radius = 5.0
+bottom_radius = 2.0
+height = 5.0
+radial_segments = 8
+rings = 0
 
 [node name="level" instance=ExtResource("1_80vhd")]
 
@@ -158,6 +306,36 @@ metadata/_custom_type_script = "uid://fhcpwam6n5y0"
 transform = Transform3D(0.99998325, 0, -4.4330955e-07, 0, 1, 0, 4.4330955e-07, 0, 0.99998325, -5.644203, 12.759008, -2.6362133)
 shape = SubResource("BoxShape3D_d5x7l")
 
+[node name="EnviormentChanger5" type="Area3D" parent="enviorments" index="6"]
+transform = Transform3D(-0.04173614, 0, 0.9991287, 0, 1, 0, -0.9991287, 0, -0.04173614, 15.638294, -35.58371, -183.63416)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.40069774, 0.40069774, 0.40069768, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger5" index="0"]
+transform = Transform3D(0.9999708, 0, -5.8859587e-07, 0, 1, 0, 5.8859587e-07, 0, 0.9999708, 2.8309174, 12.759008, -11.555481)
+shape = SubResource("BoxShape3D_mxp4k")
+
+[node name="EnviormentChanger6" type="Area3D" parent="enviorments" index="7"]
+transform = Transform3D(-0.04173614, 0, 0.9991287, 0, 1, 0, -0.9991287, 0, -0.04173614, 15.638294, 10.41629, -183.63416)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger6" index="0"]
+transform = Transform3D(0.9999565, 0, -5.066395e-07, 0, 1, 0, 5.066395e-07, 0, 0.9999565, -16.44336, 9.366232, -11.5554905)
+shape = SubResource("BoxShape3D_d7v53")
+
+[node name="EnviormentChanger7" type="Area3D" parent="enviorments" index="8"]
+transform = Transform3D(-0.04173614, 0, 0.9991287, 0, 1, 0, -0.9991287, 0, -0.04173614, 75.71513, 10.41629, -84.53104)
+script = ExtResource("4_5mrsh")
+light_color = Color(0.86430144, 0.8712353, 0.7954508, 1)
+metadata/_custom_type_script = "uid://fhcpwam6n5y0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviorments/EnviormentChanger7" index="0"]
+transform = Transform3D(0.99994814, 0, -5.9604645e-07, 0, 1, 0, 5.9604645e-07, 0, 0.99994814, 0.6803894, 9.366232, -9.768158)
+shape = SubResource("BoxShape3D_ta7ci")
+
 [node name="particles" type="Node" parent="." index="5"]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="particles" index="0"]
@@ -168,7 +346,15 @@ visibility_aabb = AABB(-11.72, -15.28, -10.48, 21.61, 21.035, 22.15)
 process_material = SubResource("ParticleProcessMaterial_d5x7l")
 draw_pass_1 = SubResource("QuadMesh_ukwr8")
 
-[node name="GPUParticles3D2" type="GPUParticles3D" parent="particles" index="1"]
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="particles" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.59441423, 43.469193, -121.017166)
+amount = 256
+lifetime = 20.0
+visibility_aabb = AABB(-11.72, -44.135, -10.48, 21.61, 48.14, 22.15)
+process_material = SubResource("ParticleProcessMaterial_d5x7l")
+draw_pass_1 = SubResource("QuadMesh_ukwr8")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="particles" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.56568, 13.921662, 19.764309)
 amount = 256
 lifetime = 5.0
@@ -184,9 +370,166 @@ transform = Transform3D(1, 0, 0, 0, -0.983137, -0.18287037, 0, 0.18287037, -0.98
 [node name="DoubleJumpUpgrade" parent="artifacts" index="0" instance=ExtResource("7_vnv7o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.794391, -14.396831, -89.17654)
 
+[node name="RayUpgrade" parent="artifacts" index="1" instance=ExtResource("8_rtcij")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.477563, 3.5855165, -168.96571)
+
+[node name="Artifact" parent="artifacts" index="2" instance=ExtResource("8_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.587326, 6.470374, 2.465072)
+
+[node name="Artifact2" parent="artifacts" index="3" instance=ExtResource("8_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.295038, 3.0698624, 4.0608797)
+
+[node name="Artifact3" parent="artifacts" index="4" instance=ExtResource("8_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0414915, -18.83927, -49.88747)
+
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74.71312, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 12.94543, 2.048111)
 shape = SubResource("BoxShape3D_rtcij")
+
+[node name="obistacles" type="Node" parent="." index="9"]
+
+[node name="Stone" parent="obistacles" index="0" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.88446, 1.916896, 11.137798)
+
+[node name="Stone2" parent="obistacles" index="1" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.945707, 1.916896, 11.137798)
+
+[node name="Stone3" parent="obistacles" index="2" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.854912, 1.916896, 11.137798)
+
+[node name="Stone4" parent="obistacles" index="3" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.700691, 1.916896, 11.137798)
+
+[node name="Stone5" parent="obistacles" index="4" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.753078, 1.916896, 11.137798)
+
+[node name="Stone6" parent="obistacles" index="5" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.88446, 3.1082087, 11.137798)
+
+[node name="Stone7" parent="obistacles" index="6" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.945707, 3.1082087, 11.137798)
+
+[node name="Stone8" parent="obistacles" index="7" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.854912, 3.1082087, 11.137798)
+
+[node name="Stone9" parent="obistacles" index="8" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.700691, 3.1082087, 11.137798)
+
+[node name="Stone10" parent="obistacles" index="9" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.753078, 3.1082087, 11.137798)
+
+[node name="Stone11" parent="obistacles" index="10" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.88446, 4.0707235, 11.137798)
+
+[node name="Stone12" parent="obistacles" index="11" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.945707, 4.0707235, 11.137798)
+
+[node name="Stone13" parent="obistacles" index="12" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.854912, 4.0707235, 11.137798)
+
+[node name="Stone14" parent="obistacles" index="13" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.700691, 4.0707235, 11.137798)
+
+[node name="Stone15" parent="obistacles" index="14" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.753078, 4.0707235, 11.137798)
+
+[node name="Stone16" parent="obistacles" index="15" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.88446, 4.923435, 11.137798)
+
+[node name="Stone17" parent="obistacles" index="16" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.945707, 4.923435, 11.137798)
+
+[node name="Stone18" parent="obistacles" index="17" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.854912, 4.923435, 11.137798)
+
+[node name="Stone19" parent="obistacles" index="18" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.700691, 4.923435, 11.137798)
+
+[node name="Stone20" parent="obistacles" index="19" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.753078, 4.923435, 11.137798)
+
+[node name="Stone21" parent="obistacles" index="20" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.88446, 5.931074, 11.137798)
+
+[node name="Stone22" parent="obistacles" index="21" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.945707, 5.931074, 11.137798)
+
+[node name="Stone23" parent="obistacles" index="22" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.854912, 5.931074, 11.137798)
+
+[node name="Stone24" parent="obistacles" index="23" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.700691, 5.931074, 11.137798)
+
+[node name="Stone25" parent="obistacles" index="24" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.753078, 5.931074, 11.137798)
+
+[node name="Stone26" parent="obistacles" index="25" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.88446, 6.926009, 11.137798)
+
+[node name="Stone27" parent="obistacles" index="26" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.945707, 6.926009, 11.137798)
+
+[node name="Stone28" parent="obistacles" index="27" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.854912, 6.926009, 11.137798)
+
+[node name="Stone29" parent="obistacles" index="28" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.700691, 6.926009, 11.137798)
+
+[node name="Stone30" parent="obistacles" index="29" instance=ExtResource("10_hy0rb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.753078, 6.926009, 11.137798)
+
+[node name="force_fild" type="StaticBody3D" parent="obistacles" index="30"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4353366, -17.144484, -64.9883)
+script = ExtResource("11_mxp4k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="obistacles/force_fild" index="0"]
+shape = SubResource("BoxShape3D_0qmeg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="obistacles/force_fild" index="1"]
+mesh = SubResource("BoxMesh_ta7ci")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="obistacles/force_fild" index="2"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_llac4")
+draw_pass_1 = SubResource("QuadMesh_aeats")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="obistacles/force_fild" index="3"]
+stream = ExtResource("12_d7v53")
+
+[node name="force_fild2" type="StaticBody3D" parent="obistacles" index="31"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1446238, 7.7896743, -164.73846)
+script = ExtResource("11_mxp4k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="obistacles/force_fild2" index="0"]
+shape = SubResource("BoxShape3D_u6cys")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="obistacles/force_fild2" index="1"]
+mesh = SubResource("BoxMesh_368ro")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="obistacles/force_fild2" index="2"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_llac4")
+draw_pass_1 = SubResource("QuadMesh_aeats")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="obistacles/force_fild2" index="3"]
+stream = ExtResource("12_d7v53")
+
+[node name="goal" type="Area3D" parent="." index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.05795, 0.3342173, -80.6917)
+script = ExtResource("13_mxp4k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="goal" index="0"]
+shape = SubResource("CylinderShape3D_hy0rb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="goal" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1910768, 0)
+mesh = SubResource("CylinderMesh_mxp4k")

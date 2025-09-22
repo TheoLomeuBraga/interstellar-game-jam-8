@@ -43,7 +43,7 @@ var double_jump_avaliable : bool = false
 @export var power_bullet : PackedScene
 var gun_cooldown : float = 0
 
-@export var relics : int = 0
+@export var artifacts : int = 0
 
 func gun_process(delta: float) -> void:
 	gun_cooldown -= delta
@@ -127,3 +127,25 @@ func _process(delta: float) -> void:
 	
 	if estate == PlayerMotionEstates.FLOOR and Input.is_action_just_pressed("jump"):
 		animation_tree.set("parameters/jump/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+var tween : Tween
+
+func end_game() -> void:
+	
+	AudioServer.set_bus_volume_db(0,linear_to_db(0.0))
+	
+	$Control/CenterContainer/Label.text = "secrets: " + str(artifacts) + "/3"
+	
+	tween = create_tween()
+	tween.tween_property($Control/ColorRect, "color", Color.WHITE, 1.0)
+	
+	await tween.finished
+	
+	tween = create_tween()
+	tween.tween_property($Control/ColorRect, "color", Color.BLACK, 1.0)
+	
+	await tween.finished
+	
+	tween = create_tween()
+	tween.tween_property($Control/CenterContainer/Label, "visible_ratio", 1.0, 1.0)
+	await tween.finished

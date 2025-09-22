@@ -11,4 +11,4 @@ func _physics_process(delta: float) -> void:
 			p.has_gun_upgrade = true
 			$MeshInstance3D.visible = false
 			$OmniLight3D.light_energy = 0.0
-			
+			$AudioStreamPlayer3D.play()

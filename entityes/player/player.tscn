@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://ce7b8hymyeq4a"]
 
-[ext_resource type="ArrayMesh" uid="uid://bwy6d08ducca6" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
+[ext_resource type="ArrayMesh" uid="uid://c0xfctw1qv4kr" path="res://assets/models/artifacts_cannon.res" id="1_fpp1k"]
 [ext_resource type="Script" uid="uid://cjy0fv2ew8mef" path="res://entityes/player/player.gd" id="1_wcdgv"]
 [ext_resource type="PackedScene" uid="uid://devnyq4gjmgpe" path="res://entityes/bullets/bullet/bullet.tscn" id="2_fuk37"]
 [ext_resource type="PackedScene" uid="uid://d12x6sdn6fjka" path="res://entityes/bullets/ray/death_ray.tscn" id="3_xlqk5"]
@@ -175,6 +175,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 shape = SubResource("CapsuleShape3D_wcdgv")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -258,3 +259,37 @@ stream = ExtResource("5_4xrlg")
 
 [node name="shot" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("6_brcdj")
+
+[node name="Control" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/CenterContainer"]
+layout_mode = 2
+text = "aaaaa"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
